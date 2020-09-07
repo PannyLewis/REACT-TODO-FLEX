@@ -1,0 +1,13 @@
+.item {
+  background-color: #44b8e6;
+  width: 20%;
+  text-align: left;
+  margin: 4px 0;
+  padding-left: 8px;
+  cursor: pointer;
+}
+
+.item.completed {
+  background-color: #e7e6e6;
+  text-decoration: line-through;
+}
