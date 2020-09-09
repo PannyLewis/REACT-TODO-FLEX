@@ -1,3 +1,5 @@
+cloned and branched 09/03/20
+
 # React-Todo
 
 We're going to practice building a stateful class component with this project. Even though hooks are gaining popularity among react developers, class components are going to be around for a long time. It's imperative that you get use to class components, and feel comfortable working with class components since you'll most likely need to work with them if you are hired to work on a React app.
@@ -21,15 +23,15 @@ We're going to practice building a stateful class component with this project. E
 ```js
 [
   {
-    task: 'Organize Garage',
+    task: "Organize Garage",
     id: 1528817077286,
-    completed: false
+    completed: false,
   },
   {
-    task: 'Bake Cookies',
+    task: "Bake Cookies",
     id: 1528817084358,
-    completed: false
-  }
+    completed: false,
+  },
 ];
 ```
 
@@ -65,3 +67,8 @@ We're going to practice building a stateful class component with this project. E
 - **Search Functionality** Add a input bar that allows you to search through your tasks and only show the ones that match the search input.
 
 - **Hosting** Create a [Netlify Account](https://www.netlify.com/) and follow the tutorial on how to host your shiny new todo app on the world wide web.
+
+Reference materials:
+
+https://levelup.gitconnected.com/building-a-simple-dynamic-search-bar-in-react-js-f1659d64dfae
+https://medium.com/@reneecruz/search-bar-in-react-js-in-six-simple-steps-4849118b2134
