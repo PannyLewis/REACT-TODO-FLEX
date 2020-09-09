@@ -8,6 +8,8 @@ const Todo = (props) => {
       onClick={() => props.toggleItem(props.item.id)}
     >
       <p>{props.item.task}</p>
+      <button onClick={() => props.startEdit(props.item)}>Edit</button>
+      <button>X</button>
     </div>
   );
 };

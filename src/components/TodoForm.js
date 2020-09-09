@@ -8,14 +8,32 @@ class TodoForm extends React.Component {
     };
   }
 
+  componentDidUpdate() {
+    console.log("componentDidUpdate");
+    if (this.props.isEditing === true && this.props.hasUpdated === false) {
+      this.setState({
+        item: this.props.toDoEdit.task,
+      });
+      console.log("updating item", this.state.item);
+      this.props.toggleUpdate();
+    }
+  }
+
   handleChanges = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   submitItem = (e) => {
     e.preventDefault();
+    const item = {
+      task: this.state.item,
+      id: this.props.toDoEdit.id,
+      completed: false,
+    };
     this.setState({ item: "" });
-    this.props.addItem(e, this.state.item);
+    this.props.isEditing
+      ? this.props.finishEdit(item)
+      : this.props.addItem(e, this.state.item);
   };
 
   render() {
@@ -28,7 +46,7 @@ class TodoForm extends React.Component {
           name="item"
           onChange={this.handleChanges}
         />
-        <button>Add Task</button>
+        <button>{this.props.isEditing ? "Edit Task" : "Add Task"}</button>
       </form>
     );
   }

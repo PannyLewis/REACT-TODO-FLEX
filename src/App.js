@@ -35,19 +35,78 @@ class App extends React.Component {
     this.state = {
       todos: todos,
       inputValue: "",
-      // sortValue: "",
+      isEditing: false,
+      toDoEdit: {},
+      hasUpdated: false,
     };
   }
 
   // equivalent to [todo, setTodo] = useState()
 
-  // search existing items on the list.
+  // editing
+  startEdit = (item) => {
+    console.log("Edit started:");
+    this.setState({
+      ...this.state,
+      toDoEdit: item,
+    });
+
+    this.toggleEdit(true);
+  };
+
+  toggleEdit = (bool) => {
+    console.log("edit toggled:", bool);
+    this.setState({
+      ...this.state,
+      isEditing: bool,
+    });
+  };
+
+  toggleUpdate = () => {
+    // console.log("edit toggleUpdate:", bool);
+    this.setState({
+      ...this.state,
+      hasUpdated: true,
+    });
+  };
+
+  finishEdit = (item) => {
+    console.log("edit finished:");
+    console.log("to do edit", this.state.toDoEdit);
+    this.setState({
+      ...this.state,
+      todos: this.state.todos.map((todo) => {
+        if (todo.id === this.state.todo.toDoEdit.id) {
+          return item;
+        }
+        return todo;
+      }),
+      hasUpdated: false,
+    });
+    this.toggleEdit(false);
+  };
+
+  //SEARCH
+  // Part 1 of search is to add an onChange.
+  // This allows for whater is typed into the input to actually display in the input field.
+  // Without the onChange, nothing would appear when you type in the input field.
   itemFilterOnChange = (e) => {
     e.preventDefault();
-    // console.log("hi from OnChange", event.target.value);
+    //you can view what's being saved as event target value:
+    // console.log("hi from OnChange", e.target.value);
 
     this.setState({ inputValue: e.target.value });
     console.log("hi from OnChange", e.target.value);
+  };
+
+  //Part 2 of search is to add a function that filters through the array todos.
+  // the f collects all item in the array that match
+  // it compares the inputvalue (seen udner state (inputValue: "",)  and under setState (this.setState({ inputValue: e.target.value });))
+  // with the value found in the array under the property task:  item.task.
+  filterItems = () => {
+    return this.state.todos.filter((item) =>
+      item.task.toLowerCase().includes(this.state.inputValue.toLowerCase())
+    );
   };
 
   // add new item when user enters value into input field, the ellipses/spread operator ... copy over the previous values
@@ -93,16 +152,6 @@ class App extends React.Component {
     });
   };
 
-  //add a function that will filter using the includes
-  filterItems = () => {
-    // this.state.todos.filter((item)  {
-    return this.state.todos.filter((item) =>
-      item.task.toLowerCase().includes(this.state.inputValue.toLowerCase())
-    );
-    // .toLowerCase()
-    // .includes(this.state.inputValue.toLowerCase());
-  };
-
   // design `App` to be the parent component of your application.
   render() {
     return (
@@ -123,12 +172,20 @@ class App extends React.Component {
             itemFilterOnChange={this.itemFilterOnChange}
           />
 
-          <TodoForm addItem={this.addItem} />
+          <TodoForm
+            addItem={this.addItem}
+            isEditing={this.state.isEditing}
+            toDoEdit={this.state.toDoEdit}
+            finishEdit={this.finishEdit}
+            hasUpdated={this.state.hasUpdated}
+            toggleUpdate={this.toggleUpdate}
+          />
         </div>
         <TodoList
           todos={this.filterItems()}
           toggleItem={this.toggleItem}
           clearCompleted={this.clearCompleted}
+          startEdit={this.startEdit}
         />
       </div>
     );
